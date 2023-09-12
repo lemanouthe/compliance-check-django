@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMPLIANCE CHECK</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+</head>
+<body>
+    <main class="form-signin">
+        <div class="block-left">
+            <div class="form-header">
+                <h1>UPLOAD FILE TO EXTRACT REQUIREMENTS</h1>
+            </div>
+            <form class="form-login" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- <div class="container"> -->
+                <!-- <div class="row"> -->
+                <div class="form-group">
+                    <label for="floatingInput">File</label>
+                    <input type="file" class="form-control" accept=".txt, .pdf, .docx" placeholder="Username" id="fichier" name="myfile">
+                </div>
+                <!-- </div> -->
+                <button class="btn-login" type="submit">Log In</button>
+                <!-- </div> -->
+            </form>
+        </div>
+        <div class="block-right">
+            <h1>Requirements</h1>
+            {{ data }}
+        </div>
+    </main>
+</body>
+</html>

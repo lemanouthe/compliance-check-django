@@ -1,0 +1,112 @@
+@import 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css';
+@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
+
+*, ::after, ::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+input:focus, button:focus {
+    outline: none;
+}
+
+.form-signin {
+    display: flex;
+    padding: 20px;
+    height: 100vh;
+}
+.block-left {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.block-left .form-login {
+    width: 60%;
+}
+
+.block-right {
+    width: 50%;
+}
+.block-right img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.form-login input {
+    width: 100%;
+    border: 1px solid gray;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.form-header {
+    margin-bottom: 30px;
+}
+.block-left h1 {
+    text-align: center;
+
+}
+
+.btn-login {
+    width: 100%;
+    padding: 15px;
+    border-radius: 30px;
+    background-color: #e27b05e2;
+    color: white;
+    border: 1px solid transparent;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.error-form {
+    color: red;
+}
+
+.form-floating {
+    margin-bottom: 1rem;
+}
+
+
+.card {
+    border: none;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    margin-bottom: 30px;
+}
+
+.w-60 {
+    width: 60px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+.social-links li a {
+    -webkit-border-radius: 50%;
+    background-color: rgba(89, 206, 181, .85);
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 30px;
+    font-size: 12px;
+}
+
+a {
+    color: #707070;
+}

@@ -11,6 +11,8 @@ from .config import (
     identify_relationships,
 )
 
+from compliance.settings import MEDIA_ROOT
+
 # categorizer = get_requirement.RequirementCategorizer()
 
 
@@ -113,9 +115,16 @@ class RequirementsExtractor:
     
     def create_json(self):
         filename = os.path.splitext(os.path.basename(self.file_path))[0]
-        # f = filename + ".json"
-        # file = json.dump(self.extracted_requirements_list, f, indent=4)
-        with open(filename + ".json", "w") as json_file:
+        
+        # Dossier du fichier JSON dans le dossier media
+        subfolder = "json_files"
+        json_file_path = os.path.join(MEDIA_ROOT, subfolder, filename + ".json")
+        
+        # Assurez-vous que le sous-dossier existe
+        os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
+        
+        # Enregistrez le contenu JSON dans le fichier
+        with open(json_file_path, "w") as json_file:
             json.dump(self.extracted_requirements_list, json_file, indent=4)
         
 

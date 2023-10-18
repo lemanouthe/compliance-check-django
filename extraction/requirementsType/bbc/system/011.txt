@@ -1,0 +1,1 @@
+The system must be compatible with Windows, macOS, and Linux operating systems.

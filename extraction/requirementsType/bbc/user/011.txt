@@ -1,0 +1,1 @@
+Users must be able to create a new account with a unique email address.

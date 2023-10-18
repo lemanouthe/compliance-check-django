@@ -4,12 +4,16 @@ import os
 import PyPDF2
 from docx import Document
 from .config import (
-    get_confidence_factor,
+    # get_confidence_factor,
     get_requirement_type,
     get_requirement_domain,
     get_rfp_domain,
     identify_relationships,
 )
+from .requirementsType.bbc import auto_categorization as requirement_types
+from .requirementsDomain.bbc import auto_categorization as requirement_domain
+from .rfp_domain.bbc import auto_categorization as rfp_domain
+from .confidenceFactor import confidence_factor
 
 from compliance.settings import MEDIA_ROOT
 
@@ -23,6 +27,7 @@ class RequirementsExtractor:
         self.paragraphs = ""
         self.cleaned_text = ""
         self.sentences = ""
+        self.background_subsection = ""
         self.all_requirements_data = []
         self.extracted_requirements_list = []
         self.segmented_text = []
@@ -35,6 +40,8 @@ class RequirementsExtractor:
 
         self.cleaned_text.strip()
 
+        return self.cleaned_text
+
     def segment_sentences(self, text):
         # Segmenter le texte en phrases
         sentences = re.findall(r"[^.!?]+[.!?]", text)
@@ -43,6 +50,7 @@ class RequirementsExtractor:
     def segment_paragraphs(self):
         # Remplacer les sauts de ligne par des espaces pour nettoyer les paragraphes
         self.cleaned_text = re.sub(r"\n", " ", self.text)
+        self.cleaned_text = re.sub(r"\d", "", self.cleaned_text)
         self.cleaned_text = re.sub(r"–", "", self.cleaned_text).strip()
         # Segmenter le texte en paragraphes
         self.paragraphs = re.split(r"\n\n+", self.cleaned_text)
@@ -54,6 +62,7 @@ class RequirementsExtractor:
         self.keywords = [
             "shall",
             "must",
+            "must be able to",
             "should",
             "have to",
             "need to",
@@ -81,8 +90,48 @@ class RequirementsExtractor:
             self.text += paragraph.text + "\n"
 
     def read_txt(self):
-        with open(self.file_path, "r", encoding='utf-8') as txt_file:
+        with open(self.file_path, "r", encoding="utf-8") as txt_file:
             self.text = txt_file.read()
+
+    def extract_background_subsection(self):
+        # Define the possible start markers for the "Background" subsection
+        start_markers = [
+            "1. Background",
+            "1.1. Background.",
+            "1.0 BACKGROUND",
+        ]
+
+        # Define the possible end markers for the subsection
+        end_markers = [
+            "2.",
+            "1.2.",
+            "2.0",
+        ]
+
+        # Initialize variables to store the start and end positions
+        start_index = None
+        end_index = None
+
+        # Find the starting position using any of the possible start markers
+        for marker in start_markers:
+            start_index = self.text.find(marker)
+            if start_index != -1:
+                break  # Exit the loop if a valid start marker is found
+
+        # Find the ending position using any of the possible end markers
+        for marker in end_markers:
+            if start_index is not None:
+                end_index = self.text.find(marker, start_index)
+                if end_index != -1:
+                    break  # Exit the loop if a valid end marker is found
+
+        if start_index is not None and end_index != -1:
+            # Extract the "Background" subsection
+            self.background_subsection = self.text[start_index:end_index].strip()
+            # print(self.background_subsection)
+            return self.background_subsection
+        else:
+            return None
 
     def extract_requirements(self):
         for req in self.segmented_text:
@@ -92,10 +141,18 @@ class RequirementsExtractor:
                     "requirement_id": len(self.extracted_requirements_list) + 1,
                     "original_RFP_context": os.path.basename(self.file_path),
                     "extracted_requirements": req.strip(),
-                    "requirement_type": get_requirement_type(req),
-                    "RFP_domain": get_rfp_domain(req),
-                    "requirement_domain": get_requirement_domain(req),
-                    "confidence_factor": get_confidence_factor(req),
+                    "requirement_type": requirement_types.classify(
+                        req
+                    ),  # get_requirement_type(req),
+                    "RFP_domain": rfp_domain.classify(
+                        self.background_subsection
+                    ),  # get_rfp_domain(req),
+                    "requirement_domain": requirement_domain.classify(
+                        req
+                    ),  # get_requirement_domain(req),
+                    "confidence_factor": confidence_factor.get_confidence_factor(
+                        req
+                    ),  # get_confidence_factor(req),
                     "relationships": [],
                 }
                 self.extracted_requirements_list.append(requirement_data)
@@ -107,27 +164,31 @@ class RequirementsExtractor:
 
                 # Ajouter les données d'exigence à la liste de toutes les exigences
                 self.all_requirements_data.append(requirement_data)
-        
+
         # Convertissez la liste en JSON
-        extracted_requirements_json = json.dumps(self.extracted_requirements_list, indent=4)
+        extracted_requirements_json = json.dumps(
+            self.extracted_requirements_list, indent=4
+        )
 
         return extracted_requirements_json
-    
+
     def create_json(self):
         filename = os.path.splitext(os.path.basename(self.file_path))[0]
-        
+
         # Dossier du fichier JSON dans le dossier media
         subfolder = "json_files"
-        json_file_path = os.path.join(MEDIA_ROOT, subfolder, filename + ".json")
         
+        json_file_path = os.path.join(MEDIA_ROOT, subfolder, filename + ".json")
+
         # Assurez-vous que le sous-dossier existe
         os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
-        
+
         # Enregistrez le contenu JSON dans le fichier
         with open(json_file_path, "w") as json_file:
             json.dump(self.extracted_requirements_list, json_file, indent=4)
-        
 
+        
+        
     def process_file(self):
         extension = self.file_path.split(".")[-1]
         if extension == "pdf":
@@ -139,6 +200,10 @@ class RequirementsExtractor:
         else:
             print("Extension de fichier non prise en charge.")
             # return
+
+        self.clean_text()
+        self.extract_background_subsection()
+
         self.paragraphs = self.segment_paragraphs()
 
         for paragraph in self.paragraphs:
@@ -148,7 +213,7 @@ class RequirementsExtractor:
         # self.extract_requirements()
         extracted_requirements_json = self.extract_requirements()
         self.create_json()
-        return extracted_requirements_json 
+        return extracted_requirements_json
 
 
 # Utilisation de la classe

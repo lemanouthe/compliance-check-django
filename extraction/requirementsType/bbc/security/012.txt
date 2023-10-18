@@ -1,0 +1,1 @@
+User passwords should be securely stored using industry-standard encryption.

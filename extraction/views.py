@@ -26,6 +26,12 @@ def json_list(request):
         extractor = RequirementsExtractor(fichier_path)
 
         extract_datas = extractor.process_file()
+        
+        
+        # filename = os.path.splitext(os.path.basename(fichier_path))[0]
+        
+        fichier.requirements = extractor.create_json()
+        fichier.save()
 
         datas = {
             "list_of_requirements": json.loads(extract_datas),

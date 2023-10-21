@@ -6,8 +6,8 @@ env:
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
   REGISTRY: docker.io
   IMAGE: lemanouthe/compliance-check
-  WEB_IMAGE: $IMAGE:web
-  NGINX_IMAGE: $IMAGE:nginx-proxy
+  WEB_IMAGE: lemanouthe/compliance-check:web
+  NGINX_IMAGE: lemanouthe/compliance-check:nginx-proxy
   DATABASE: ${{secrets.DATABASE}}
   DEPLOY_PUBLIC_IP_ADDRESS: ${{secrets.DEPLOY_PUBLIC_IP_ADDRESS}}
   PRIVATE_KEY: ${{secrets.PRIVATE_KEY}}

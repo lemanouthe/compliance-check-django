@@ -73,7 +73,7 @@ jobs:
           key: ${{secrets.PRIVATE_KEY}}
           port: 22
           script: |
-            cd /home/ubuntu/compliance_github/
+            cd /home/ubuntu/compliance_github
             export $(cat .env | xargs)
             docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
             docker pull $IMAGE:web

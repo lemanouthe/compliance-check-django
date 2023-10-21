@@ -22,7 +22,7 @@ services:
     image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    env_file: .env.staging.db
+    env_file: .env
   
   redis:
     restart: unless-stopped

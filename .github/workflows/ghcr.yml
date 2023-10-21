@@ -8,12 +8,26 @@ env:
   IMAGE: lemanouthe/compliance-check
   WEB_IMAGE: $IMAGE:web
   NGINX_IMAGE: $IMAGE:nginx-proxy
+  DATABASE: ${{secrets.DATABASE}}
+  DEPLOY_PUBLIC_IP_ADDRESS: ${{secrets.DEPLOY_PUBLIC_IP_ADDRESS}}
+  PRIVATE_KEY: ${{secrets.PRIVATE_KEY}}
+  SECRET_KEY: ${{secrets.SECRET_KEY}}
+  SQL_HOST: ${{secrets.SQL_HOST}}
+  SQL_PASSWORD: ${{secrets.SQL_PASSWORD}}
+  SQL_PORT: ${{secrets.SQL_PORT}}
+  SQL_USER: ${{secrets.SQL_USER}}
+  VIRTUAL_HOST: ${{secrets.VIRTUAL_HOST}}
+  VIRTUAL_PORT: ${{secrets.VIRTUAL_PORT}}
 
 jobs:
   push-image-to-docker-hub:  # job name
     runs-on: ubuntu-latest  # runner name : (ubuntu latest version) 
     steps:
     - uses: actions/checkout@v2 # first action : checkout source code
+    - name: Create env file
+      run: |
+        chmod +x ./setup_env.sh
+        bash ./setup_env.sh
     - name: docker login
       run: | # log into docker hub account
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY

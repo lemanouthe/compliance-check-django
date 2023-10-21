@@ -2,10 +2,11 @@ name: This a workflow title
 on: [push] # When pushing to any branch then run this action
 # Env variable
 env:
-  DOCKER_USER: ${{secrets.GHCR_USERNAME}}
-  DOCKER_PASSWORD: ${{secrets.GHCR_TOKEN}}
-  REPO_NAME: ${{secrets.REPO_NAME}}
-  REGISTRY: ghcr.io
+  DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
+  DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+  REGISTRY: docker.io
+  IMAGE: lemanouthe/compliance-check
+
 jobs:
   push-image-to-docker-hub:  # job name
     runs-on: ubuntu-latest  # runner name : (ubuntu latest version) 

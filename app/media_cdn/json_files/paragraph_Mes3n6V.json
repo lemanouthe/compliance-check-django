@@ -1,0 +1,125 @@
+[
+    {
+        "requirement_id": 1,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "The Contractor shall provide Program Management Support Services to AFMRA/SG as described in the following paragraphs by task.",
+        "requirement_type": "Business",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Hardware",
+        "confidence_factor": 0.38,
+        "relationships": []
+    },
+    {
+        "requirement_id": 2,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "TASK I  EXECUTIVE ADMINISTRATIVE SUPPORT The contractor shall provide one mid-senior level Executive Administrative Support to two Government executives and approximately  personnel within the SG Capability Development Division, located at Defense Health Headquarters (DHHQ),  Arlington Blvd.",
+        "requirement_type": "System",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Hardware",
+        "confidence_factor": 0.38,
+        "relationships": []
+    },
+    {
+        "requirement_id": 3,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "Use office automation software, such as Microsoft Office, to create and edit documents, presentations, graphics, tables, electronic drafts, and electronic mail.",
+        "requirement_type": "Design",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Hardware",
+        "confidence_factor": 0.32,
+        "relationships": []
+    },
+    {
+        "requirement_id": 4,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "Update existing databases or spreadsheets.",
+        "requirement_type": "Functional",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Hardware",
+        "confidence_factor": 0.46,
+        "relationships": []
+    },
+    {
+        "requirement_id": 5,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "Review, edit, and update documents to include checking for proper format, spelling, grammar, capitalization, and punctuation.",
+        "requirement_type": "Design",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Hardware",
+        "confidence_factor": 0.33,
+        "relationships": [
+            3
+        ]
+    },
+    {
+        "requirement_id": 6,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "Prepare and submit documents in appropriate formats IAW the latest Air Force Handbook (AFH) -, The Tongue and Quill.",
+        "requirement_type": "Design",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Software",
+        "confidence_factor": 0.34,
+        "relationships": [
+            3,
+            5
+        ]
+    },
+    {
+        "requirement_id": 7,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "Receive telephone calls, greet, and prepare for visitors, and determine the nature of the calls or visits; screen for requests that can be handled without assistance.",
+        "requirement_type": "Functional",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Hardware",
+        "confidence_factor": 0.37,
+        "relationships": [
+            4
+        ]
+    },
+    {
+        "requirement_id": 8,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "Update and maintain office procedures to ensure effective and efficient operations.",
+        "requirement_type": "Design",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Software",
+        "confidence_factor": 0.35,
+        "relationships": [
+            3,
+            5,
+            6
+        ]
+    },
+    {
+        "requirement_id": 9,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "Ensure correspondence and communication with returned calls, emails, and faxes are promptly addressed within one () business day.",
+        "requirement_type": "Business",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Internet of things (iot)",
+        "confidence_factor": 0.37,
+        "relationships": [
+            1
+        ]
+    },
+    {
+        "requirement_id": 10,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "Travel arrangements shall include making reservations, scheduling transportation, securing protocol and area approvals, preparing travel itineraries and preparing travel orders based on general travel intentions or known preferences of the traveler IAW established travel regulations.",
+        "requirement_type": "Regulatory or compliance",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Security",
+        "confidence_factor": 0.31,
+        "relationships": []
+    },
+    {
+        "requirement_id": 11,
+        "original_RFP_context": "paragraph_Mes3n6V.txt",
+        "extracted_requirements": "All military and government civilian travel must be IAW the Joint Travel Regulation (JTR ) for Department of Defense (DoD) Uniformed Service members and Civilian Employees at: http://www.",
+        "requirement_type": "Security",
+        "RFP_domain": "Construction",
+        "requirement_domain": "Security",
+        "confidence_factor": 0.33,
+        "relationships": []
+    }
+]

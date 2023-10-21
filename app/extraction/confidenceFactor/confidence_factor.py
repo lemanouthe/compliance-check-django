@@ -37,7 +37,7 @@ def get_confidence_factor(sentence):
     proba = classifier.predict_proba(X_new)
     confidence_factor = round(proba.max(), 2)  # proba.max()
 
-    print("Catégorie prédite :", predicted_category)
-    print("Facteur de confiance :", confidence_factor)
+    # print("Catégorie prédite :", predicted_category)
+    # print("Facteur de confiance :", confidence_factor)
 
     return confidence_factor

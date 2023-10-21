@@ -41,3 +41,40 @@ jobs:
       run: |
         docker push $IMAGE:web
         docker push $IMAGE:nginx-proxy
+  befor-deploy:
+    name: Befor deploy
+    runs-on: ubuntu-latest
+    needs: push-image-to-docker-hub
+    steps:
+      - uses: actions/checkout@v3
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: $DEPLOY_PUBLIC_IP_ADDRESS
+          username: ubuntu
+          key: $PRIVATE_KEY
+          port: 22
+          source: "./nginx, ./.env, ./.env.staging.proxy-companion, ./docker-compose.staging.yml"
+          target: "/home/ubuntu/compliance_github/"
+  deploy:
+    runs-on: ubuntu-latest  # Utilisez l'image Ubuntu par défaut
+    needs: befor-deploy
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: $DEPLOY_PUBLIC_IP_ADDRESS
+          username: ubuntu
+          key: $PRIVATE_KEY
+          port: 22
+          script: |
+            cd /home/ubuntu/compliance_github/
+            export $(cat .env | xargs)
+            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
+            docker pull $IMAGE:web
+            docker pull $IMAGE:nginx-proxy
+            docker-compose -f docker-compose.staging.yml down || true
+            docker rm -vf $(docker ps -aq) || true
+            docker rmi -f $(docker images -aq) || true
+            docker-compose -f docker-compose.staging.yml up -d

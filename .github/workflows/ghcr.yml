@@ -1,0 +1,16 @@
+name: This a workflow title 
+on: [push] # When pushing to any branch then run this action
+# Env variable
+env:
+  DOCKER_USER: ${{secrets.GHCR_USERNAME}}
+  DOCKER_PASSWORD: ${{secrets.GHCR_TOKEN}}
+  REPO_NAME: ${{secrets.REPO_NAME}}
+  REGISTRY: ghcr.io
+jobs:
+  push-image-to-docker-hub:  # job name
+    runs-on: ubuntu-latest  # runner name : (ubuntu latest version) 
+    steps:
+    - uses: actions/checkout@v2 # first action : checkout source code
+    - name: docker login
+      run: | # log into docker hub account
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY

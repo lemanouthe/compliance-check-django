@@ -48,9 +48,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Create env file
-      run: |
-        chmod +x ./setup_env.sh
-        bash ./setup_env.sh
+        run: |
+          chmod +x ./setup_env.sh
+          bash ./setup_env.sh
       - name: copy file via ssh key
         uses: appleboy/scp-action@v0.1.4
         with:

@@ -6,6 +6,8 @@ env:
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
   REGISTRY: docker.io
   IMAGE: lemanouthe/compliance-check
+  WEB_IMAGE: $IMAGE:web
+  NGINX_IMAGE: $IMAGE:nginx-proxy
 
 jobs:
   push-image-to-docker-hub:  # job name
@@ -15,3 +17,13 @@ jobs:
     - name: docker login
       run: | # log into docker hub account
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
+    - name: Pull Web and nginx image # push The image to the docker hub
+      run: |
+        docker pull $IMAGE:web || true
+        docker pull $IMAGE:nginx-proxy || true
+    - name: Build Web and nginx image
+      run: docker-compose -f docker-compose.ci.yml build
+    - name: Push to Docker Hub
+      run: |
+        docker push $IMAGE:web
+        docker push $IMAGE:nginx-proxy

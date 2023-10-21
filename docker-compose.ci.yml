@@ -10,8 +10,8 @@ services:
     image: "${WEB_IMAGE}"
     command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/home/app/staticfiles
-      - media_volume:/home/app/mediafiles
+      - static_volume:/home/app/static_cdn
+      - media_volume:/home/app/media_cdn
     expose:
       - 8000
     env_file: .env
@@ -37,8 +37,8 @@ services:
         - "${NGINX_IMAGE}"
     image: "${NGINX_IMAGE}"
     volumes:
-      - static_volume:/home/app/web/staticfiles
-      - media_volume:/home/app/web/mediafiles
+      - static_volume:/home/app/web/static_cdn
+      - media_volume:/home/app/web/media_cdn
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - certs:/etc/nginx/certs
       - vhost:/etc/nginx/vhost.d

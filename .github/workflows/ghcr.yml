@@ -67,15 +67,17 @@ jobs:
       - uses: actions/checkout@v3
       - name: Deploy using ssh
         uses: appleboy/ssh-action@master
+      - name: docker login
+        run: | # log into docker hub account
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
         with:
           host: ${{secrets.DEPLOY_PUBLIC_IP_ADDRESS}}
           username: ubuntu
           key: ${{secrets.PRIVATE_KEY}}
           port: 22
           script: |
-            cd /home/ubuntu/compliance_github
+            cd /home/ubuntu/compliance_github/
             export $(cat .env | xargs)
-            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
             docker pull $IMAGE:web
             docker pull $IMAGE:nginx-proxy
             docker-compose -f docker-compose.staging.yml down || true

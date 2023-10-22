@@ -28,6 +28,6 @@ echo POSTGRES_HOST_AUTH_METHOD=trust  >> .env
 
 
 # .env.staging.proxy-companion
-echo DEFAULT_EMAIL=mamoutoudoumbia89@gmail.com  >> .env.staging.proxy-companion
+echo DEFAULT_EMAIL=dmmamoute@gmail.com  >> .env.staging.proxy-companion
 echo ACME_CA_URI=https://acme-staging-v02.api.letsencrypt.org/directory  >> .env.staging.proxy-companion
 echo NGINX_PROXY_CONTAINER=nginx-proxy  >> .env.staging.proxy-companion

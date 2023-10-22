@@ -65,11 +65,11 @@ jobs:
     needs: befor-deploy
     steps:
       - uses: actions/checkout@v3
-      - name: Deploy using ssh
-        uses: appleboy/ssh-action@master
       - name: docker login
         run: | # log into docker hub account
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.DEPLOY_PUBLIC_IP_ADDRESS}}
           username: ubuntu

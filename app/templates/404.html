@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>COMPLIANCE CHECK | 404</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title mb-2">
+            This page is gone.
+        </h1>
+        <p>
+            ...maybe the page you're looking for is not found or never existed.
+        </p>
+        <a href="{% url 'home' %}">
+            <button class="button is-warning">Back to home <i class="far fa-hand-point-right"></i></button>
+        </a>
+    </div>
+</body>
+
+</html>
